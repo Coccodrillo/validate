@@ -44,12 +44,20 @@ var (
 	ErrNotAlphanumeric = errors.New(`Expecting alphanumeric.`)
 	ErrNotAlphabetic   = errors.New(`Expecting an alphabetic string.`)
 
-	ErrIsNil = errors.New(`Expecting a non empty value.`)
+	ErrIsEmpty = errors.New(`Expecting a non empty value.`)
+	ErrEmpty   = errors.New(`Expecting an empty value.`)
 )
 
-func NotNil(input string) error {
+func Empty(input string) error {
+	if input != "" {
+		return ErrEmpty
+	}
+	return nil
+}
+
+func NotEmpty(input string) error {
 	if input == "" {
-		return ErrIsNil
+		return ErrIsEmpty
 	}
 	return nil
 }
@@ -105,4 +113,39 @@ func Chain(input string, links ...func(string) error) error {
 		}
 	}
 	return nil
+}
+
+func Each(tests ...error) error {
+	for i, _ := range tests {
+		if tests[i] != nil {
+			return tests[i]
+		}
+	}
+	return nil
+}
+
+func All(tests ...error) []error {
+	res := make([]error, 0, len(tests))
+
+	for i, _ := range tests {
+		if tests[i] != nil {
+			res = append(res, tests[i])
+		}
+	}
+
+	return res
+}
+
+func Any(tests ...error) error {
+	var last error
+
+	for i, _ := range tests {
+		if tests[i] == nil {
+			return nil
+		} else {
+			last = tests[i]
+		}
+	}
+
+	return last
 }

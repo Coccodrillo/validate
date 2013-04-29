@@ -136,8 +136,90 @@ func TestValidateChain(t *testing.T) {
 	fnErr := func(s string) error {
 		return nil
 	}
-	err = Chain("user@example.com", NotNil, Email, fnErr, fnOk)
+	err = Chain("user@example.com", NotEmpty, Email, fnErr, fnOk)
 	if err != nil {
 		t.Fatalf("Failed validation: %s", err.Error())
+	}
+}
+
+func TestValidateEach(t *testing.T) {
+	var err error
+
+	err = Each(
+		Email("user@example.com"),
+		Email("userexample.com"),
+		Email("user@example.com"),
+	)
+
+	if err == nil {
+		t.Fatalf("Expecting error.")
+	}
+
+	err = Each(
+		Email("user@example.com"),
+		NotEmpty("hola"),
+		Float("1.23"),
+	)
+
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+}
+
+func TestValidateAll(t *testing.T) {
+	var err []error
+
+	err = All(
+		Email("user@example.com"),
+		Email("userexample.com"),
+		Email("user@example.com"),
+	)
+
+	if len(err) == 0 {
+		t.Fatalf("Expecting error.")
+	}
+
+	err = All(
+		Email("user@example.com"),
+		NotEmpty("hola"),
+		Float("1.23"),
+	)
+
+	if len(err) != 0 {
+		t.Fatalf(err[0].Error())
+	}
+}
+
+func TestValidateAny(t *testing.T) {
+	var err error
+
+	err = Any(
+		Email("user@example.com"),
+		Email("userexample.com"),
+		Email("user@example.com"),
+	)
+
+	if err != nil {
+		t.Fatalf("Expecting at least one valid e-mail.")
+	}
+
+	err = Any(
+		Email("user@example.com"),
+		NotEmpty("hola"),
+		Float("1.23"),
+	)
+
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+
+	err = Any(
+		Email("userexample.com"),
+		Email("123"),
+		Float("a"),
+	)
+
+	if err == nil {
+		t.Fatalf("Expecting an error")
 	}
 }
