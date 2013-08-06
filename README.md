@@ -116,4 +116,4 @@ See the [online docs][1].
 >  OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 >  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-1: http://godoc.org/menteslibres.net/gosexy/validate
+[1]: http://godoc.org/menteslibres.net/gosexy/validate
