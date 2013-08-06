@@ -85,13 +85,13 @@ rules return `nil`.
 ```go
 err := validate.Any(userAge, validate.Empty, validate.Integer)
 if err == nil {
-  // Value is empty or an e-mail.
+  // Value is either empty or it is an e-mail.
 }
 ```
 
 ## Documentation
 
-See the [online docs][1].
+See the [online docs][1] and the [project page][2].
 
 ## License
 
@@ -117,3 +117,4 @@ See the [online docs][1].
 >  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 [1]: http://godoc.org/menteslibres.net/gosexy/validate
+[2]: https://menteslibres.net/gosexy/validate
