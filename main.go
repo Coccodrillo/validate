@@ -34,7 +34,7 @@ import (
 
 var (
 	// Common validation rules
-	RuleEmail        = regexp.MustCompile(`^[a-zA-Z0-9\+\-\.]+@[a-zA-Z0-9\.\-]+$`)
+	RuleEmail        = regexp.MustCompile(`^[a-zA-Z0-9\+\-\_\.]+@[a-zA-Z0-9\.\-\_]+$`)
 	RuleURL          = regexp.MustCompile(`^[a-zA-Z0-9]+:\/\/.+`)
 	RuleFloat        = regexp.MustCompile(`^[0-9\.]+$`)
 	RuleInteger      = regexp.MustCompile(`^[0-9]+$`)
